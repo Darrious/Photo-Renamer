@@ -2,19 +2,23 @@
 import os
 import sys
 import shutil
+from PIL import Image
 
-
-directory = "./test"
+directory = "./2019/07"
 
 x = 0
 for filename in os.listdir(directory):
-    if filename.endswith(".txt"):
+    if filename.endswith(".jpg"):
         file = directory + "/" +filename
-       	fileNew = directory + "/newName" + str(x) + ".txt"
+        try:
+        	img = Image.open(file).getexif()[36867]
+        	fileNew = directory + "/" + img[5:7] + "_" + img[8:10] + "_" + img[0:4] + "___" + str(x) + ".jpg"
+       		print(fileNew)
 
-       	os.rename(file, fileNew)
-        print(fileNew)
-        
-    else:
-        continue
+       		os.rename(file, fileNew)
+
+       	except :
+       		pass
+
+        #print(fileNew)
     x += 1
